@@ -1,13 +1,53 @@
 import { UserModel } from "../Models/UserModel.js";
+import { UserSchema } from "../Schemas/userSchema.js";
 import bcrypt from "bcrypt";
 
 export class UserController {
+  static async getUsers(req, res) {
+    try {
+      const result = await UserModel.getUsers();
+
+      res.json({ result });
+    } catch (error) {}
+  }
+
+  static async getUserById(req, res) {
+    const { _userId } = req.body;
+
+    try {
+      const result = await UserModel.getUser(_userId);
+
+      if (result.length === 0) {
+        return res.status(401).json({
+          success: false,
+          message: "The user with that ID was not found.",
+        });
+      }
+
+      return res.status(200).json({
+        success: true,
+        message: "user found successfully.",
+        data: result,
+      });
+    } catch (error) {
+      console.log(`Error in controller ${error}`);
+    }
+  }
+
   static async createUser(req, res) {
     const { userName, userLastName, userBirthdate, userEmail, userPassword } =
       req.body;
 
     try {
-      const userPasswordHashed = bcrypt.hash(userPassword, 10);
+      if (UserSchema.validationEmail(userEmail))
+        return res.status(401).json({
+          success: false,
+          message: "Error mail no valido",
+        });
+
+      const userPasswordHashed = await bcrypt.hash(userPassword, 10);
+
+      console.log(req.body);
 
       const result = await UserModel.postUser(
         userName,
@@ -16,8 +56,14 @@ export class UserController {
         userEmail,
         userPasswordHashed
       );
+
+      res.status(201).json({
+        success: true,
+        message: "user created successfully",
+        result,
+      });
     } catch (error) {
-      console.log(`Error: ${error}`);
+      console.log(`Error in controller ${error}`);
     }
   }
 }

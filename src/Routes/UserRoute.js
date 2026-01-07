@@ -1,13 +1,10 @@
 import { Router } from "express";
 
-import { UserController } from "../Models/UserController.js";
-import { validateSchema } from "../Middleware/validateSchema.js";
-import { userSchema } from "../Schemas/userSchema.js";
+import { UserController } from "../Controllers/UserController.js";
 
 export const userRoute = Router();
 
-userRoute.get("/", (req, res) => {
-  res.json({ message: "User API" });
-});
+userRoute.get("/", UserController.getUsers);
+userRoute.get("/userById", UserController.getUserById);
 
-userRoute.post("/", UserController.postUser);
+userRoute.post("/", UserController.createUser);
