@@ -16,6 +16,8 @@ export class UserController {
         userEmail,
         userPasswordHashed
       );
-    } catch (error) {}
+    } catch (error) {
+      console.log(`Error: ${error}`);
+    }
   }
 }
