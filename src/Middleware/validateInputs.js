@@ -5,7 +5,7 @@ import {
 } from "../Utils/userValidations.js";
 
 // TODO: Validacion de fecha!
-export function validateUser(req, res, next) {
+export function validateInputs(req, res, next) {
   const { userName, userEmail, userPassword } = req.body;
 
   const emailIsValid = validateEmail(userEmail);
