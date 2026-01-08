@@ -63,7 +63,9 @@ export class UserController {
         message: "user created successfully.",
         result,
       });
-    } catch (error) {}
+    } catch (error) {
+      // TODO: Add Errors
+    }
   }
 
   static async loginUser(req, res) {
@@ -97,6 +99,8 @@ export class UserController {
         message: "The session was successfully started.",
         auth_token: token,
       });
-    } catch (error) {}
+    } catch (error) {
+      // TODO: Add Errors
+    }
   }
 }

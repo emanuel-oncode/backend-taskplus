@@ -7,7 +7,9 @@ export class UserModel {
       const [result] = await pool.execute("SELECT * FROM user");
 
       return result;
-    } catch (error) {}
+    } catch (error) {
+      // TODO: Add Errors
+    }
   }
 
   static async getUser(userId) {

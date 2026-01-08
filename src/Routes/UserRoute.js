@@ -12,6 +12,7 @@ userRoute.post("/register", validateUser, UserController.createUser);
 
 userRoute.post("/login", UserController.loginUser);
 
+// TODO: create protected routes
 userRoute.get("/protegida", authMiddleware, (req, res) => {
   res.json({ message: "ruta protegida" });
 });
