@@ -19,9 +19,28 @@ export class UserModel {
 
       if (result.length === 0) return [];
 
-      return result[0];
+      return result[0]; // <-- obtebgo el usuario espesifico
     } catch (error) {
       console.error("Error get a user in the database ", error);
+    }
+  }
+
+  static async getUserByEmail(email) {
+    try {
+      const [result] = await pool.execute(
+        `SELECT user_email, user_name, user_last_name FROM user WHERE user_email = ? LIMIT 1`,
+        [email]
+      );
+
+      if (result.length === 0) return [];
+
+      return result[0]; // <-- obtebgo el usuario espesifico
+    } catch (error) {
+      if (error.code === "ER_BAD_FIELD_ERROR") {
+        throw new Error("Error en la consulta SQL: campo inexistente");
+      }
+
+      throw new Error("Error interno del servidor");
     }
   }
 
