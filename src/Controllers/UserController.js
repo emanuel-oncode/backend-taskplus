@@ -1,5 +1,5 @@
 import { UserModel } from "../Models/UserModel.js";
-import { singToken } from "../Utils/token.js";
+import { signToken } from "../Utils/token.js";
 import bcrypt from "bcrypt";
 
 export class UserController {
@@ -50,8 +50,6 @@ export class UserController {
 
       const userPasswordHashed = await bcrypt.hash(userPassword, 10);
 
-      console.log(req.body);
-
       const result = await UserModel.postUser(
         userName,
         userLastName,
@@ -92,12 +90,12 @@ export class UserController {
         });
       }
 
-      const token = singToken(user.user_id, user.user_email);
+      const token = signToken(user.user_id, user.user_email);
 
-      return res.status(201).json({
+      return res.status(200).json({
         success: true,
         message: "The session was successfully started.",
-        token,
+        auth_token: token,
       });
     } catch (error) {}
   }
