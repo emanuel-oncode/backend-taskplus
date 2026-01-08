@@ -6,6 +6,7 @@ import { authMiddleware } from "../Middleware/auth/authMiddleware.js";
 
 export const userRoute = Router();
 
+// TODO: Este endpoind debe ser borrado!!
 userRoute.get("/", UserController.getUsers);
 
 userRoute.post("/register", validateUser, UserController.createUser);
