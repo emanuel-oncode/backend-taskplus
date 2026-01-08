@@ -1,15 +1,26 @@
-import { veryfiToken } from "../../Utils/token.js";
+import { verifyToken } from "../../Utils/token.js";
 
 export const authMiddleware = (req, res, next) => {
-  const token = req.headers.auth_token;
-  const validateToken = veryfiToken(token);
+  const authHeader = req.headers.authorization;
 
-  if (validateToken) {
-    next();
+  if (!authHeader) {
+    return res.status(401).json({
+      success: false,
+      message: "Token not provided",
+    });
   }
 
-  return res.status(401).json({
-    success: false,
-    message: "Not validate token",
-  });
+  const token = authHeader.split(" ")[1]; // Bearer TOKEN
+
+  try {
+    const decoded = verifyToken(token);
+
+    req.user = decoded; // 🔥 guardamos usuario
+    next();
+  } catch (error) {
+    return res.status(401).json({
+      success: false,
+      message: "Invalid token",
+    });
+  }
 };
