@@ -19,7 +19,7 @@ export class UserModel {
 
       if (result.length === 0) return [];
 
-      return result[0]; // <-- obtebgo el usuario espesifico
+      return result[0];
     } catch (error) {
       console.error("Error get a user in the database ", error);
     }
@@ -34,7 +34,7 @@ export class UserModel {
 
       if (result.length === 0) return [];
 
-      return result[0]; // <-- obtebgo el usuario espesifico
+      return result[0];
     } catch (error) {
       if (error.code === "ER_BAD_FIELD_ERROR") {
         throw new Error("Error en la consulta SQL: campo inexistente");
