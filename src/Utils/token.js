@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 import { JWT_SECRET_KEY } from "../Config/env.config.js";
 
-export const singToken = (user_id, user_email) => {
+export const signToken = (user_id, user_email) => {
   const token = jwt.sign(
     {
       id: user_id,
@@ -16,7 +16,7 @@ export const singToken = (user_id, user_email) => {
   return token;
 };
 
-export const veryfiToken = (token) => {
+export const verifyToken = (token) => {
   try {
     jwt.verify(token, JWT_SECRET_KEY);
 
