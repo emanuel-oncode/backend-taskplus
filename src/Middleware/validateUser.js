@@ -4,12 +4,13 @@ import {
   validatePasssword,
 } from "../validations/userValidations.js";
 
-// TODO: Validar fecha!
-function validateUser(req, res, next) {
+// TODO: Validacion de fecha!
+export function validateUser(req, res, next) {
   const { userName, userEmail, userPassword } = req.body;
 
   const emailIsValid = validateEmail(userEmail);
-  if (emailIsValid.ok) {
+  console.log();
+  if (!emailIsValid.ok) {
     return res.status(400).json({
       success: false,
       message: emailIsValid.message,
@@ -17,7 +18,7 @@ function validateUser(req, res, next) {
   }
 
   const nameIsValid = validateName(userName);
-  if (nameIsValid.ok) {
+  if (!nameIsValid.ok) {
     return res.status(400).json({
       success: false,
       message: nameIsValid.message,
@@ -25,7 +26,7 @@ function validateUser(req, res, next) {
   }
 
   const passwordIsValid = validatePasssword(userPassword);
-  if (passwordIsValid.ok) {
+  if (!passwordIsValid.ok) {
     return res.status(400).json({
       success: false,
       message: passwordIsValid.message,
