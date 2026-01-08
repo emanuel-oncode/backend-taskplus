@@ -1,5 +1,4 @@
 import { UserModel } from "../Models/UserModel.js";
-import { UserSchema } from "../Schemas/userSchema.js";
 import bcrypt from "bcrypt";
 
 export class UserController {
@@ -39,11 +38,14 @@ export class UserController {
       req.body;
 
     try {
-      if (UserSchema.validationEmail(userEmail))
-        return res.status(401).json({
+      const userExists = await UserModel.getUserByEmail(userEmail);
+
+      if (userExists) {
+        return res.status(404).json({
           success: false,
-          message: "Error mail no valido",
+          message: "The email address is already registered.",
         });
+      }
 
       const userPasswordHashed = await bcrypt.hash(userPassword, 10);
 
@@ -62,8 +64,6 @@ export class UserController {
         message: "user created successfully",
         result,
       });
-    } catch (error) {
-      console.log(`Error in controller ${error}`);
-    }
+    } catch (error) {}
   }
 }
