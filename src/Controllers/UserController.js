@@ -66,4 +66,35 @@ export class UserController {
       });
     } catch (error) {}
   }
+
+  static async loginUser(req, res) {
+    const { userEmail, userPassword } = req.body;
+    try {
+      const user = await UserModel.getUserByEmail(userEmail);
+
+      if (!user) {
+        return res.status(404).json({
+          success: false,
+          message: "No se encontro usuario registrado con este correo.",
+        });
+      }
+
+      const passworIsTrue = await bcrypt.compare(
+        userPassword,
+        user.user_password
+      );
+
+      if (!passworIsTrue) {
+        return res.status(404).json({
+          success: false,
+          message: "contraseña incorrecta",
+        });
+      }
+
+      return res.status(201).json({
+        success: true,
+        message: "se inisio secion correctamente",
+      });
+    } catch (error) {}
+  }
 }
