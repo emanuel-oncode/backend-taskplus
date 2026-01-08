@@ -1,4 +1,5 @@
 import { UserModel } from "../Models/UserModel.js";
+import { singToken } from "../Utils/token.js";
 import bcrypt from "bcrypt";
 
 export class UserController {
@@ -61,7 +62,7 @@ export class UserController {
 
       res.status(201).json({
         success: true,
-        message: "user created successfully",
+        message: "user created successfully.",
         result,
       });
     } catch (error) {}
@@ -75,7 +76,7 @@ export class UserController {
       if (!user) {
         return res.status(404).json({
           success: false,
-          message: "No se encontro usuario registrado con este correo.",
+          message: "No registered user was found with this email address.",
         });
       }
 
@@ -87,13 +88,16 @@ export class UserController {
       if (!passworIsTrue) {
         return res.status(404).json({
           success: false,
-          message: "contraseña incorrecta",
+          message: "Incorrect password.",
         });
       }
 
+      const token = singToken(user.user_id, user.user_email);
+
       return res.status(201).json({
         success: true,
-        message: "se inisio secion correctamente",
+        message: "The session was successfully started.",
+        token,
       });
     } catch (error) {}
   }

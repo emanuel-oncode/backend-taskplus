@@ -2,7 +2,7 @@ import {
   validateEmail,
   validateName,
   validatePasssword,
-} from "../validations/userValidations.js";
+} from "../Utils/userValidations.js";
 
 // TODO: Validacion de fecha!
 export function validateUser(req, res, next) {
