@@ -28,11 +28,11 @@ export class UserModel {
   static async getUserByEmail(email) {
     try {
       const [result] = await pool.execute(
-        `SELECT user_email, user_name, user_last_name FROM user WHERE user_email = ? LIMIT 1`,
+        `SELECT user_email, user_name, user_last_name, user_password FROM user WHERE user_email = ? LIMIT 1`,
         [email]
       );
 
-      if (result.length === 0) return [];
+      if (result.length === 0) return null;
 
       return result[0];
     } catch (error) {
