@@ -94,6 +94,13 @@ export class UserController {
 
       const token = signToken(user.user_id, user.user_email);
 
+      res.cookie("token", token, {
+        httpOnly: true, // seguridad
+        secure: false, // true en producción con https
+        sameSite: "lax",
+        maxAge: 24 * 60 * 60 * 1000, // 1 día
+      });
+
       return res.status(200).json({
         success: true,
         message: "The session was successfully started.",
