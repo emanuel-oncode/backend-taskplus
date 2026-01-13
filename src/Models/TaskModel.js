@@ -1,7 +1,7 @@
 import { pool } from "../Config/dbConexion.js";
 import { v4 as uuidv4 } from "uuid";
 
-class TaskModel {
+export class TaskModel {
   static async createTask(
     task_title,
     task_description,
@@ -26,6 +26,8 @@ class TaskModel {
       );
 
       return result;
-    } catch (error) {}
+    } catch (error) {
+      console.error("Error: ", error);
+    }
   }
 }
