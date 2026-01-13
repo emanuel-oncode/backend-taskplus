@@ -9,7 +9,7 @@ export function validateInputs(req, res, next) {
   const { userName, userEmail, userPassword } = req.body;
 
   const emailIsValid = validateEmail(userEmail);
-  console.log();
+
   if (!emailIsValid.ok) {
     return res.status(400).json({
       success: false,
