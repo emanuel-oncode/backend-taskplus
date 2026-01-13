@@ -1,5 +1,6 @@
 import express from "express";
 import { userRoute } from "./Routes/UserRoute.js";
+import { taskRoute } from "./Routes/TaskRoute.js";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 
@@ -17,6 +18,7 @@ app.use(
 );
 
 app.use("/user", userRoute);
+app.use("/user/task", taskRoute);
 
 app.get("/", (req, res) => {
   res.status(200).json({ message: "The API is working" });
