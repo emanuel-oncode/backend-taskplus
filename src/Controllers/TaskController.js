@@ -1,6 +1,27 @@
 import { TaskModel } from "../Models/TaskModel.js";
 
 export class TaskController {
+  static async getTaskUser(req, res) {
+    const user_id = req.session.user_id;
+
+    try {
+      const result = await TaskModel.getTask(user_id);
+
+      if (!result) {
+        return res.status(400).json({
+          success: false,
+          message: "No hay tareas creadas",
+        });
+      }
+
+      return res.status(200).json({
+        success: true,
+        message: "exito",
+        tasks: result,
+      });
+    } catch (error) {}
+  }
+
   static async createNewTask(req, res) {
     const user_id = req.session.user_id;
     const { task_title, task_description, task_completed } = req.body;
