@@ -42,7 +42,7 @@ export class UserController {
       const userExists = await UserModel.getUserByEmail(userEmail);
 
       if (userExists) {
-        return res.status(404).json({
+        return res.status(400).json({
           success: false,
           message: "The email address is already registered.",
         });
