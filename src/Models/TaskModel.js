@@ -30,4 +30,21 @@ export class TaskModel {
       console.error("Error: ", error);
     }
   }
+
+  static async getTask(user_id) {
+    try {
+      const [result] = await pool.execute(
+        `
+          SELECT * FROM task WHERE user_id = ?
+        `,
+        [user_id]
+      );
+
+      if (result.length === 0) return [];
+
+      return result[0];
+    } catch (error) {
+      console.error("Error: ", error);
+    }
+  }
 }
