@@ -4,7 +4,6 @@ import { TaskController } from "../Controllers/TaskController.js";
 
 export const taskRoute = Router();
 
-taskRoute.get("/", (req, res) => {
-  res.json({ task: "task" });
-});
+taskRoute.get("/", authMiddleware, TaskController.getTaskUser);
 taskRoute.post("/createTask", authMiddleware, TaskController.createNewTask);
+taskRoute.patch("/", authMiddleware, TaskController.toggleCompleted);

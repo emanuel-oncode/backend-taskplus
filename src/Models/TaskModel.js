@@ -32,19 +32,31 @@ export class TaskModel {
   }
 
   static async getTask(user_id) {
+    console.log("Id del usuario en getTask: ", user_id);
     try {
       const [result] = await pool.execute(
         `
-          SELECT * FROM task WHERE user_id = ?
+           SELECT * FROM task WHERE user_id = ?
         `,
         [user_id]
       );
 
       if (result.length === 0) return [];
 
-      return result[0];
+      return result;
     } catch (error) {
       console.error("Error: ", error);
     }
+  }
+
+  static async toggleTaskCompleted(task_id, user_id) {
+    try {
+      const [result] = await pool.execute(
+        `UPDATE task SET task_completed = NOT task_completed WHERE task_id = ? and user_id = ?`,
+        [task_id, user_id]
+      );
+
+      return result.affectedRows > 0;
+    } catch (error) {}
   }
 }
