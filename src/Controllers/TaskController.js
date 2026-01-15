@@ -24,7 +24,7 @@ export class TaskController {
   }
 
   static async createNewTask(req, res) {
-    const user_id = req.session.user_id;
+    const user_id = req.user.id;
     const { task_title, task_description, task_completed } = req.body;
 
     try {
@@ -70,5 +70,32 @@ export class TaskController {
         message: "Estado cambiado exitosamente",
       });
     } catch (error) {}
+  }
+
+  static async delatedTask(req, res) {
+    const user_id = req.user.id;
+    const { task_id } = req.body;
+
+    try {
+      const result = await TaskModel.deletedTask(task_id, user_id);
+
+      if (result.affectedRows === 0) {
+        return res.status(404).json({
+          success: false,
+          message: "Tarea no encontrada",
+        });
+      }
+
+      return res.status(200).json({
+        success: true,
+        message: "Tarea eliminada!",
+      });
+    } catch (error) {
+      console.error("Error al eliminar tarea:", error);
+      return res.status(500).json({
+        success: false,
+        message: "Error interno del servidor",
+      });
+    }
   }
 }

@@ -20,7 +20,7 @@ export class TaskModel {
 
       const [result] = await pool.execute(
         `
-          INSERT INTO task (task_id, task_title, task_description, task_completed, user_id) WHERE (?,?,?,?,?)
+          INSERT INTO task (task_id, task_title, task_description, task_completed, user_id) VALUES (?,?,?,?,?)
         `,
         [task_id, task_title, task_description, task_completed, user_id]
       );
@@ -58,5 +58,21 @@ export class TaskModel {
 
       return result.affectedRows > 0;
     } catch (error) {}
+  }
+
+  static async deletedTask(task_id, user_id) {
+    try {
+      const [result] = await pool.execute(
+        `
+          DELETE FROM task WHERE task_id = ? and user_id = ?
+        `,
+        [task_id, user_id]
+      );
+
+      return result;
+    } catch (error) {
+      console.error("Error en deletedTask:", error);
+      throw error;
+    }
   }
 }
