@@ -73,10 +73,6 @@ export class UserController {
     try {
       const user = await UserModel.getUserByEmail(userEmail);
 
-      console.log("🔍 Usuario completo desde la BD:", user);
-      console.log("🔍 user.user_id:", user.user_id);
-      console.log("🔍 Todas las propiedades:", Object.keys(user));
-
       if (!user) {
         return res.status(404).json({
           success: false,

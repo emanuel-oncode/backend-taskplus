@@ -34,7 +34,7 @@ export class UserModel {
         [email]
       );
 
-      if (result.length === 0) return [];
+      if (result.length === 0) return null;
 
       return result[0];
     } catch (error) {

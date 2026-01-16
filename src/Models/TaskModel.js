@@ -25,7 +25,7 @@ export class TaskModel {
         [task_id, task_title, task_description, task_completed, user_id]
       );
 
-      return result[0];
+      return result;
     } catch (error) {
       console.error("Error: ", error);
     }
