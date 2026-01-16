@@ -3,8 +3,6 @@ import { TaskModel } from "../Models/TaskModel.js";
 export class TaskController {
   static async getTaskUser(req, res) {
     const user_id = req.user.id;
-
-    console.log("user id desde el controlador getTaskUser:", user_id);
     try {
       const result = await TaskModel.getTask(user_id);
 
@@ -26,6 +24,13 @@ export class TaskController {
   static async createNewTask(req, res) {
     const user_id = req.user.id;
     const { task_title, task_description, task_completed } = req.body;
+
+    if (!task_title) {
+      return res.status(400).json({
+        success: false,
+        message: "Falta el titulo",
+      });
+    }
 
     try {
       const result = await TaskModel.createTask(
@@ -53,8 +58,6 @@ export class TaskController {
   static async toggleCompleted(req, res) {
     const user_id = req.user.id;
     const { task_id } = req.body;
-
-    console.log("toggel userid: ", user_id);
     try {
       const result = await TaskModel.toggleTaskCompleted(task_id, user_id);
 
