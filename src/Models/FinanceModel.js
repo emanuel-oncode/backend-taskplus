@@ -1,4 +1,5 @@
 import { pool } from "../Config/dbConexion.js";
+import { v4 as uuidv4 } from "uuid";
 
 //? CREATE TABLE finance (
 //?     finance_id CHAR(32) PRIMARY KEY,
@@ -10,13 +11,8 @@ import { pool } from "../Config/dbConexion.js";
 //? );
 
 export class FinanceModel {
-  static async postFinance(
-    finance_id,
-    amount,
-    user_id,
-    finance_type,
-    finance_description,
-  ) {
+  static async postFinance(amount, user_id, finance_type, finance_description) {
+    const finance_id = uuidv4().replace(/-/g, "");
     try {
       const [result] = await pool.execute(
         `
