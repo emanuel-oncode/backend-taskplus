@@ -8,7 +8,9 @@ export class UserController {
       const result = await UserModel.getUsers();
 
       res.json({ result });
-    } catch (error) {}
+    } catch (error) {
+      console.log("Error: ", error);
+    }
   }
 
   static async getUserById(req, res) {
@@ -55,7 +57,7 @@ export class UserController {
         userLastName,
         userBirthdate,
         userEmail,
-        userPasswordHashed
+        userPasswordHashed,
       );
 
       res.status(201).json({
@@ -65,6 +67,7 @@ export class UserController {
       });
     } catch (error) {
       // TODO: Add Errors
+      console.log("Error: ", error);
     }
   }
 
@@ -82,7 +85,7 @@ export class UserController {
 
       const passworIsTrue = await bcrypt.compare(
         userPassword,
-        user.user_password
+        user.user_password,
       );
 
       if (!passworIsTrue) {
@@ -108,6 +111,7 @@ export class UserController {
       });
     } catch (error) {
       // TODO: Add Errors
+      console.log("Error: ", error);
     }
   }
 }
